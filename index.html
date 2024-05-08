@@ -16,14 +16,18 @@
         const itemId = queryParams.get('id');
         const itemName = queryParams.get('name');
         const itemDescription = queryParams.get('description');
+        const itemLocation = queryParams.get('location');
+        const itemTime = queryParams.get('time');
 
         // Display item information on the webpage
         const itemInfoDiv = document.getElementById("itemInfo");
-        if (itemId && itemName && itemDescription) {
+        if (itemId && itemName && itemDescription && itemLocation && itemTime) {
             itemInfoDiv.innerHTML = `
                 <p><strong>ID:</strong> ${itemId}</p>
                 <p><strong>Name:</strong> ${itemName}</p>
                 <p><strong>Description:</strong> ${itemDescription}</p>
+                <p><strong>Location:</strong> ${itemLocation}</p>
+                <p><strong>Time:</strong> ${itemTime}</p>
             `;
         } else {
             itemInfoDiv.innerHTML = "<p>No item information available.</p>";
