@@ -7,31 +7,29 @@
 </head>
 <body>
     <h1>Item Information</h1>
-
-    <div id="itemInfo"></div>
+    <div id="itemInfo">
+        <!-- Item information will be displayed here -->
+    </div>
 
     <script>
-        // Parse query parameters from URL
-        const queryParams = new URLSearchParams(window.location.search);
-        const itemId = queryParams.get('id');
-        const itemName = queryParams.get('name');
-        const itemDescription = queryParams.get('description');
-        const itemLocation = queryParams.get('location');
-        const itemTime = queryParams.get('time');
+        // Get URL parameters
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        const name = urlParams.get('name');
+        const description = urlParams.get('description');
+        const location = urlParams.get('location');
+        const time = urlParams.get('time');
 
-        // Display item information on the webpage
+        // Display item information
         const itemInfoDiv = document.getElementById("itemInfo");
-        if (itemId && itemName && itemDescription && itemLocation && itemTime) {
-            itemInfoDiv.innerHTML = `
-                <p><strong>ID:</strong> ${itemId}</p>
-                <p><strong>Name:</strong> ${itemName}</p>
-                <p><strong>Description:</strong> ${itemDescription}</p>
-                <p><strong>Location:</strong> ${itemLocation}</p>
-                <p><strong>Time:</strong> ${itemTime}</p>
-            `;
-        } else {
-            itemInfoDiv.innerHTML = "<p>No item information available.</p>";
-        }
+        itemInfoDiv.innerHTML = `
+            <p><strong>ID:</strong> ${id}</p>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Description:</strong> ${description}</p>
+            <p><strong>Location:</strong> ${location}</p>
+            <p><strong>Time:</strong> ${time}</p>
+        `;
     </script>
 </body>
 </html>
