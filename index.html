@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Information</title>
+</head>
+<body>
+    <h1>Item Information</h1>
+    <form id="itemForm">
+        <label for="itemId">Enter Item ID:</label>
+        <input type="text" id="itemId" name="itemId">
+        <button type="submit">Get Item Info</button>
+    </form>
+    <div id="itemInfo"></div>
+
+    <script>
+        document.getElementById("itemForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var itemId = document.getElementById("itemId").value;
+            fetch(`https://example.com/api/items/${itemId}`) // Replace with your API endpoint
+                .then(response => response.json())
+                .then(data => {
+                    var itemInfoDiv = document.getElementById("itemInfo");
+                    if (data.error) {
+                        itemInfoDiv.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        itemInfoDiv.innerHTML = `
+                            <p><strong>ID:</strong> ${data.id}</p>
+                            <p><strong>Name:</strong> ${data.name}</p>
+                            <p><strong>Description:</strong> ${data.description}</p>
+                            <img src="${data.picture}" alt="${data.name}">
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    var itemInfoDiv = document.getElementById("itemInfo");
+                    itemInfoDiv.innerHTML = "<p>Failed to retrieve item information.</p>";
+                });
+        });
+    </script>
+</body>
+</html>
