@@ -7,29 +7,35 @@
 </head>
 <body>
     <h1>Item Information</h1>
-    <div id="itemInfo">
-        <!-- Item information will be displayed here -->
-    </div>
+    <div id="itemInfo"></div>
 
     <script>
-        // Get URL parameters
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const id = urlParams.get('id');
-        const name = urlParams.get('name');
-        const description = urlParams.get('description');
-        const location = urlParams.get('location');
-        const time = urlParams.get('time');
+        // Function to parse query parameters from URL
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get query parameters
+        const itemId = getQueryParameter("id");
+        const itemName = getQueryParameter("name");
+        const itemDescription = getQueryParameter("description");
+        const itemLocation = getQueryParameter("location");
+        const itemTime = getQueryParameter("time");
 
         // Display item information
         const itemInfoDiv = document.getElementById("itemInfo");
-        itemInfoDiv.innerHTML = `
-            <p><strong>ID:</strong> ${id}</p>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Description:</strong> ${description}</p>
-            <p><strong>Location:</strong> ${location}</p>
-            <p><strong>Time:</strong> ${time}</p>
-        `;
+        if (itemId && itemName && itemDescription && itemLocation && itemTime) {
+            itemInfoDiv.innerHTML = `
+                <p><strong>ID:</strong> ${itemId}</p>
+                <p><strong>Name:</strong> ${itemName}</p>
+                <p><strong>Description:</strong> ${itemDescription}</p>
+                <p><strong>Location:</strong> ${itemLocation}</p>
+                <p><strong>Time:</strong> ${itemTime}</p>
+            `;
+        } else {
+            itemInfoDiv.innerHTML = "<p>Failed to retrieve item information.</p>";
+        }
     </script>
 </body>
 </html>
