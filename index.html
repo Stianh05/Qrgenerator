@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item Information</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Information</title>
 </head>
 <body>
-    <h1>Item Information</h1>
-    <div id="itemInfo"></div>
+  <h1>Item Information</h1>
+  <div id="itemInfo"></div>
 
-    <script>
-        // Function to parse query parameters from URL
-        function getQueryParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
+  <script>
+    // Function to parse item ID from URL parameters
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
-        // Get query parameters
-        const itemId = getQueryParameter("id");
-        const itemName = getQueryParameter("name");
-        const itemDescription = getQueryParameter("description");
-        const itemLocation = getQueryParameter("location");
-        const itemTime = getQueryParameter("time");
-
-        // Display item information
-        const itemInfoDiv = document.getElementById("itemInfo");
-        if (itemId && itemName && itemDescription && itemLocation && itemTime) {
-            itemInfoDiv.innerHTML = `
-                <p><strong>ID:</strong> ${itemId}</p>
-                <p><strong>Name:</strong> ${itemName}</p>
-                <p><strong>Description:</strong> ${itemDescription}</p>
-                <p><strong>Location:</strong> ${itemLocation}</p>
-                <p><strong>Time:</strong> ${itemTime}</p>
+    // Function to fetch item data from JSON file
+    function fetchItemData(itemId) {
+      fetch('items.json')
+        .then(response => response.json())
+        .then(data => {
+          const item = data.items.find(item => item.id === parseInt(itemId));
+          if (item) {
+            document.getElementById('itemInfo').innerHTML = `
+              <h2>${item.name}</h2>
+              <p>${item.description}</p>
             `;
-        } else {
-            itemInfoDiv.innerHTML = "<p>Failed to retrieve item information.</p>";
-        }
-    </script>
+          } else {
+            document.getElementById('itemInfo').innerHTML = '<p>Item not found</p>';
+          }
+        })
+        .catch(error => console.error('Error fetching item data:', error));
+    }
+
+    // On page load, fetch and display item data based on ID from URL
+    window.onload = function() {
+      const itemId = getParameterByName('id');
+      if (itemId) {
+        fetchItemData(itemId);
+      } else {
+        document.getElementById('itemInfo').innerHTML = '<p>No item ID provided</p>';
+      }
+    };
+  </script>
 </body>
 </html>
