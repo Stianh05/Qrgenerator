@@ -1,0 +1,33 @@
+{
+    "items": [
+      {
+        "id": "1",
+        "name": "Boks med skruer",
+        "description": "En liten boks med skruer litt ødelakt. Skruene er 12cm og rustende.",
+        "location": "2. hylle",
+        "time": "12:30.07.05.2024"
+      },
+      {
+        "id": "2",
+        "name": "En stein",
+        "description": "Veldig fin stein jeg fant utenfor. Litt rund. Veier sikkert 20kg",
+        "location": "Utenfor",
+        "time": "10:45.07.05.2024"
+      },
+      {
+        "id": "3",
+        "name": "Katt",
+        "description": "Fant en katt som gikk forbi. Orange. Lå den er i hylle 1, men kan ikke love at den fortsatt er der...",
+        "location": "1. hylle",
+        "time": "09:20.07.05.2024"
+      },
+      {
+        "id": "4",
+        "name": "Penger",
+        "description": "Det ligger 100000kr i 50 lapper i en eske. 4. hylle. Første man som til å ta de får sparken!",
+        "location": "4. hylle",
+        "time": "15:00.07.05.2024"
+      }
+    ]
+  }
+  
