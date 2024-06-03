@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+</head>
+<body>
+    <div id="edit-form-container"></div>
+    <button id="save-button">Save</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            fetch('items.json')
+                .then(response => response.json())
+                .then(data => {
+                    const item = data.items.find(item => item.id === itemId);
+                    if (item) {
+                        const formContainer = document.getElementById('edit-form-container');
+                        formContainer.innerHTML = `
+                            <label>Name: <input type="text" id="name" value="${item.name}"></label><br>
+                            <label>Description: <input type="text" id="description" value="${item.description}"></label><br>
+                            <label>Location: <input type="text" id="location" value="${item.location}"></label>
+                        `;
+                    } else {
+                        formContainer.innerHTML = '<p>Item not found.</p>';
+                    }
+                });
+
+            document.getElementById('save-button').addEventListener('click', function() {
+                const name = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
+                const location = document.getElementById('location').value;
+
+                const updatedItem = {
+                    id: itemId,
+                    name: name,
+                    description: description,
+                    location: location,
+                    time: new Date().toLocaleString()
+                };
+
+                localStorage.setItem('updatedItem', JSON.stringify(updatedItem));
+                alert('Changes saved locally. Implement a backend to save changes permanently.');
+            });
+        });
+    </script>
+</body>
+</html>
